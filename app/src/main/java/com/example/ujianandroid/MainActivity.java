@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                         } else if (umur < 40) {
                             status = "Dewasa";
                         } else {
-                            status = "Tua";
+                            status = "Lanjut Usia";
                         }
                         String nama_lengkap = isian_nama_depan.concat(" ").concat(isian_nama_belakang);
                         daftar_nama.clear();
