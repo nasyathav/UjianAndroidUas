@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         EditText edNamaDepan = (EditText) findViewById(R.id.edNamaDepan);
         EditText edNamaBelakang = (EditText) findViewById(R.id.edNamaBelakang);
+        EditText edUsia = (EditText) findViewById(R.id.edUsia);
         Button btnSimpan = (Button) findViewById(R.id.btnSimpan);
 
         ArrayList<String> daftar_nama = new ArrayList<>();
@@ -31,19 +32,41 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String isian_nama_depan = edNamaDepan.getText().toString();
                 String isian_nama_belakang = edNamaBelakang.getText().toString();
+                String isian_usia = edUsia.getText().toString();
 
-                if(isian_nama_depan.isEmpty()){
+                if (isian_nama_depan.isEmpty() || isian_usia.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Isian masih kosong", Toast.LENGTH_SHORT).show();
-                }else{
-                    String nama_lengkap = isian_nama_depan.concat(" ").concat(isian_nama_belakang);
-                    daftar_nama.clear();
-                    daftar_nama.add(nama_lengkap);
-                    edNamaDepan.setText("");
-                    edNamaBelakang.setText("");
-                    intent_list.putStringArrayListExtra("daftar_nama", daftar_nama);
-                    startActivity(intent_list);
+                } else {
+                    int umur = Integer.parseInt(isian_usia);
+                    if (umur <= 0) {
+                        Toast.makeText(getApplicationContext(), "Usia harus lebih dari 0", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String status;
+                        if (umur < 10) {
+                            status = "Anak-anak";
+                        } else if (umur < 20) {
+                            status = "Remaja";
+                        } else if (umur < 40) {
+                            status = "Dewasa";
+                        } else {
+                            status = "Tua";
+                        }
+                        String nama_lengkap = isian_nama_depan.concat(" ").concat(isian_nama_belakang);
+                        daftar_nama.clear();
+
+                        // Membuat perulangan sesuai dengan nilai umur
+                        for (int i = 1; i <= umur; i++) {
+                            daftar_nama.add(i + " " + isian_nama_depan + " " + isian_nama_belakang + "," + "status :" + " " + status);
+                        }
+
+                        edNamaDepan.setText("");
+                        edNamaBelakang.setText("");
+                        edUsia.setText("");
+                        intent_list.putStringArrayListExtra("daftar_nama", daftar_nama);
+                        startActivity(intent_list);
+                    }
                 }
             }
-        });
-    }
+   });
+}
 }
